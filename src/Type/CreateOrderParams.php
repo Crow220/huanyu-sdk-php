@@ -6,7 +6,7 @@ namespace HuanyuSdk\Type;
 class CreateOrderParams
 {
     private const FIELDS = [
-        'order_type', 'payment_amount', 'payment_method', 'customer_name', 'id_card',
+        'order_type', 'cny_amount', 'payment_method', 'customer_name', 'id_card',
         'mobile', 'remark', 'merchant_order_no',
     ];
 

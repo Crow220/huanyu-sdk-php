@@ -11,8 +11,8 @@ use HuanyuSdk\Type\OrderDetailQuery;
 use HuanyuSdk\Type\OrderListFilters;
 
 /**
- * 商户 API 客户端。注意：平台对 merchant_order_no 不去重，createOrder 重试可能重复建单，
- * 调用方必须自行保证商户单号唯一。
+ * 商户 API 客户端。merchant_order_no 商户内唯一：同商户重复单号建单返回"商户单号已存在"错误，
+ * 超时后可凭同一单号安全重试（返回已存在即代表首单已建成）。
  */
 class Client
 {
