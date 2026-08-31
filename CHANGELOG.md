@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 - 2026-09-01
+
+- `orderDetail` 支持数组直传：`$client->orderDetail(['order_no' => 'HY001'])`，`id` / `order_no` / `merchant_order_no` 三选一，未知字段自动过滤；`OrderDetailQuery::byId()` 等对象写法保留，行为不变。
+
 ## 1.0.0 - 2026-09-01
 
 首个公开发布。

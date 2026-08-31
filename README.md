@@ -25,7 +25,7 @@ $order = $client->createOrder([
 
 // 查询
 $list  = $client->orderList(['status' => 'paid,confirmed', 'page' => 1, 'limit' => 20]);
-$detail = $client->orderDetail(\HuanyuSdk\Type\OrderDetailQuery::byOrderNo($order['order_no']));
+$detail = $client->orderDetail(['order_no' => $order['order_no']]); // id / order_no / merchant_order_no 三选一
 
 // 卖单确认付款 / 上传凭证
 $client->confirmPayment($order['order_no']);
@@ -59,7 +59,7 @@ try {
 } catch (HuanyuApiException $e) {
     if (strpos($e->getMessage(), '商户单号已存在') !== false) {
         // 首单已建成：按商户单号查单确认状态即可，不要重复下单
-        $order = $client->orderDetail(\HuanyuSdk\Type\OrderDetailQuery::byMerchantOrderNo($no));
+        $order = $client->orderDetail(['merchant_order_no' => $no]);
     } else {
         throw $e;
     }
