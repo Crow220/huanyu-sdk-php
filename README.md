@@ -18,8 +18,8 @@ $client = new Client('你的api_key', '你的api_secret');
 // 创建订单（三要素字段是否必填由商户配置决定）
 $order = $client->createOrder([
     'order_type'        => '1',        // 1=买入 2=卖出
-    'payment_amount'    => '100.00',
-    'merchant_order_no' => 'M20260831001', // 商户自己保证唯一！
+    'cny_amount'        => '100.00',
+    'merchant_order_no' => 'M20260831001', // 商户内唯一，重复会被拒绝
 ]);
 // $order['result_status'] === 'pending_identity' 时引导用户访问 $order['identity_url']
 
@@ -49,5 +49,22 @@ echo 'success'; // 必须响应 HTTP 200 且含 success，否则平台按 5/30/1
 
 ## 重要注意事项
 
-- **平台不校验 merchant_order_no 唯一性**：网络超时后盲目重试 `createOrder` 会重复建单，请用商户单号做本地幂等。
+- **merchant_order_no 商户内唯一**：同一商户重复单号建单返回"商户单号已存在"错误（不同商户间可重复）。网络超时后可用同一单号安全重试——若返回"已存在"，说明首单已建成，请按单号查单确认状态：
+
+```php
+use HuanyuSdk\Exception\HuanyuApiException;
+
+try {
+    $order = $client->createOrder($params);
+} catch (HuanyuApiException $e) {
+    if (strpos($e->getMessage(), '商户单号已存在') !== false) {
+        // 首单已建成：按商户单号查单确认状态即可，不要重复下单
+        $order = $client->orderDetail(\HuanyuSdk\Type\OrderDetailQuery::byMerchantOrderNo($no));
+    } else {
+        throw $e;
+    }
+}
+```
+
+- **nonce 自动生成**：平台要求每个请求的 nonce 在 10 分钟窗口内一次性有效（防重放）。SDK 每次调用都会自动生成全新的 timestamp/nonce/signature，失败后直接再次调用即可，无需（也不要）缓存复用请求参数。
 - timestamp 为秒级时间戳，本机时钟偏差超过 ±300 秒会验签失败。

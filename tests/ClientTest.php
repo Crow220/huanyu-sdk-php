@@ -31,7 +31,7 @@ class ClientTest extends TestCase
         ]))]);
 
         $order = $this->client($mock)->createOrder([
-            'order_type' => '1', 'payment_amount' => '100.00', 'merchant_order_no' => 'M001',
+            'order_type' => '1', 'cny_amount' => '100.00', 'merchant_order_no' => 'M001',
         ]);
 
         $this->assertSame('HY001', $order['order_no']);
@@ -51,7 +51,7 @@ class ClientTest extends TestCase
             'code' => 1, 'msg' => '需补充客户身份信息',
             'data' => ['result_status' => 'pending_identity', 'identity_url' => 'https://x.test/i?o=1'],
         ]))]);
-        $order = $this->client($mock)->createOrder(['order_type' => '1', 'payment_amount' => '1.00']);
+        $order = $this->client($mock)->createOrder(['order_type' => '1', 'cny_amount' => '1.00']);
         $this->assertSame('pending_identity', $order['result_status']);
     }
 
