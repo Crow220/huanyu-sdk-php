@@ -81,6 +81,30 @@ class ClientTest extends TestCase
         $this->assertStringContainsString('signature=', $query);
     }
 
+    public function testOrderDetailAcceptsArrayQuery(): void
+    {
+        $mock = new MockHandler([new Response(200, [], json_encode([
+            'code' => 1, 'msg' => '获取成功', 'data' => ['order_no' => 'HY001'],
+        ]))]);
+        $detail = $this->client($mock)->orderDetail(['order_no' => 'HY001']);
+        $this->assertSame('HY001', $detail['order_no']);
+        $query = $mock->getLastRequest()->getUri()->getQuery();
+        $this->assertStringContainsString('order_no=HY001', $query);
+        $this->assertStringContainsString('signature=', $query);
+    }
+
+    public function testOrderDetailArrayFiltersUnknownFields(): void
+    {
+        $mock = new MockHandler([new Response(200, [], json_encode([
+            'code' => 1, 'msg' => '获取成功', 'data' => [],
+        ]))]);
+        $this->client($mock)->orderDetail(['id' => '123', 'hack' => 'evil', 'page' => '9']);
+        $query = $mock->getLastRequest()->getUri()->getQuery();
+        $this->assertStringContainsString('id=123', $query);
+        $this->assertStringNotContainsString('hack=', $query);
+        $this->assertStringNotContainsString('page=', $query);
+    }
+
     public function testConfirmPaymentOptionalProof(): void
     {
         $mock = new MockHandler([new Response(200, [], json_encode([

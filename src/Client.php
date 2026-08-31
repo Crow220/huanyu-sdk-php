@@ -52,8 +52,14 @@ class Client
         return $this->request('GET', '/merchant/orderListApi', $filters->toArray());
     }
 
-    public function orderDetail(OrderDetailQuery $query): array
+    /**
+     * @param array|OrderDetailQuery $query 如 ['order_no' => 'HY001']（id / order_no / merchant_order_no 三选一）
+     */
+    public function orderDetail($query): array
     {
+        if (is_array($query)) {
+            $query = OrderDetailQuery::fromArray($query);
+        }
         return $this->request('GET', '/merchant/orderDetailApi', $query->toArray());
     }
 
