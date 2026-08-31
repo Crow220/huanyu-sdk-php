@@ -1,0 +1,19 @@
+{
+    "name": "crow220/huanyu-sdk-php",
+    "description": "寰宇（PISCES）商户平台对接 SDK",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {"HuanyuSdk\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"HuanyuSdk\\Tests\\": "tests/"}
+    }
+}
