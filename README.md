@@ -44,7 +44,7 @@ if (!$verifier->verify($payload)) {
     exit;
 }
 // ...业务处理（回调仅在订单 completed 时推送）
-echo 'success'; // 必须响应 HTTP 200 且含 success，否则平台按 5/30/120/600s 重试 5 次
+echo 'success'; // 必须响应 HTTP 200 且含 success，否则平台按 5/30/120/600s 共推送 5 次（首次 + 4 次重试）
 ```
 
 ## 重要注意事项
