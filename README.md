@@ -4,7 +4,9 @@
 
 ## 安装
 
+```bash
 composer require crow220/huanyu-sdk-php
+```
 
 ## 快速上手
 
