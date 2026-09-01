@@ -15,12 +15,12 @@ use HuanyuSdk\Client;
 
 $client = new Client('你的api_key', '你的api_secret');
 
-// 创建订单（三要素字段是否必填由商户配置决定）
+// 创建订单（三要素字段是否必填由商户配置决定；除 order_type/cny_amount 外均为选填）
 $order = $client->createOrder([
-    'order_type'        => '1',        // 1=买入 2=卖出
-    'cny_amount'        => '100.00',
-    'merchant_order_no' => 'M20260831001', // 商户内唯一，重复会被拒绝
-    // 'callback_url'  => 'https://your.callback/receive', // 选填：本单回调地址，未设置用商户默认
+    'order_type' => '1',   // 1=买入 2=卖出
+    'cny_amount' => '100.00',
+    // 'merchant_order_no' => 'M20260831001', // 选填：商户单号（商户内唯一），用于对账；超时可凭同一单号安全重试
+    // 'callback_url'      => 'https://your.callback/receive', // 选填：本单回调地址，未设置用商户默认
 ]);
 // $order['result_status'] === 'pending_identity' 时引导用户访问 $order['identity_url']
 
