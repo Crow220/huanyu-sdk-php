@@ -7,7 +7,7 @@ class CreateOrderParams
 {
     private const FIELDS = [
         'order_type', 'cny_amount', 'payment_method', 'customer_name', 'id_card',
-        'mobile', 'remark', 'merchant_order_no',
+        'mobile', 'remark', 'merchant_order_no', 'callback_url',
     ];
 
     private array $data;
