@@ -1,6 +1,6 @@
 {
     "name": "crow220/huanyu-sdk-php",
-    "description": "寰宇（PISCES）商户平台对接 SDK",
+    "description": "PISCES 商户平台对接 SDK",
     "type": "library",
     "license": "MIT",
     "require": {

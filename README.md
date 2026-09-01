@@ -1,6 +1,6 @@
 # huanyu-sdk-php
 
-寰宇（PISCES）商户平台官方 PHP SDK。
+PISCES 商户平台官方 PHP SDK。
 
 ## 安装
 
